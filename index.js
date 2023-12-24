@@ -1,7 +1,7 @@
 import connect from "ajax16-db-client";
 import { getCaracterPosition } from "./utils/utils.js";
 
-export class JSDBConnect {
+export class AjaxDBConnect {
 
     host = 'localhost';
     port = 3000;
