@@ -1,5 +1,5 @@
 {
-  "name": "jsdb",
+  "name": "ajaxdb",
   "version": "1.0.0",
   "description": "JSDB coding interface to interact with a JSDB server",
   "main": "index.js",
