@@ -1,4 +1,4 @@
-import connect from "ajax16-db-client";
+import connect from "ajaxdb-client";
 import { getCaracterPosition } from "./utils/utils.js";
 
 export class AjaxDBConnect {
