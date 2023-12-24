@@ -22,7 +22,7 @@ export class AjaxDBConnect {
         }
     }
 
-    async query(query, params) {
+    async query(query, params = []) {
 
         const variablePositions = getCaracterPosition(query, '?');
 
@@ -34,9 +34,10 @@ export class AjaxDBConnect {
             throw new Error('Number of parameters does not match the number of "?" placeholders.');
         }
 
-        const queryWithValues = variablePositions.reduce((result, position, index) => {
-            return result.substring(0, position) + params[index] + result.substring(position + 1);
-        }, query);
+        const queryWithValues = query.replace(/\?/g, () => {
+            const value = params.shift();
+            return typeof value === 'string' ? `'${value}'` : value;
+        });
 
         try{
             const result = await connect(this.host, this.port, queryWithValues);
