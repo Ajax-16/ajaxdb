@@ -1,6 +1,6 @@
 {
   "name": "ajaxdb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "JSDB coding interface to interact with a JSDB server",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,6 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "ajaxdb-client": "^1.0.1"
+    "ajaxdb-client": "^1.0.0"
   }
 }
