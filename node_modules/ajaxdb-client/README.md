@@ -1,2 +1,2 @@
-# JS_DB_CLIENT
+# ajaxdb-client
 Non-Object based JS database manager client
