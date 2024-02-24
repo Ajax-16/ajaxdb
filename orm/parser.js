@@ -11,13 +11,24 @@ export function ormParse(table) {
     }
    
     if (dimensions === 3) {
-        let responses = {};
+        
+        if(table.length > 1) {
 
-        for (let i = 0; i < table.length; i++) {
-            responses[`q${i + 1}`] = ormParse(table[i]);
+            let responses = {};
+
+            for (let i = 0; i < table.length; i++) {
+                responses[`q${i + 1}`] = ormParse(table[i]);
+            }    
+
+            return responses;
+
+        }else {
+            
+            return ormParse(table[0]);
+
         }
 
-        return responses;
+        
     } else if (dimensions === 2) {
         if (table.length === 3) {
             let resultObject = {};

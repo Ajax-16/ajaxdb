@@ -23,7 +23,7 @@ export class AjaxDBConnect {
         }
     }
 
-    async tableQuery(query, params = []) {
+    async queryRaw(query, params = []) {
 
         const variablePositions = getCaracterPosition(query, '?');
 
@@ -49,7 +49,7 @@ export class AjaxDBConnect {
 
     }
 
-    async objectQuery(query, params = []) {
+    async query(query, params = []) {
         const variablePositions = getCaracterPosition(query, '?');
 
         if (!Array.isArray(params)) {
