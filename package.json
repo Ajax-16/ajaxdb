@@ -16,6 +16,6 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "ajaxdb-client": "^1.0.1"
+    "ajaxdb-client": "^1.0.2"
   }
 }
