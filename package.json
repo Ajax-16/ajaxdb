@@ -1,6 +1,6 @@
 {
   "name": "ajaxdb",
-  "version": "1.0.7v2",
+  "version": "0.0.0",
   "description": "AjaxDB coding interface to interact with a AjaxDB server",
   "main": "index.js",
   "scripts": {
