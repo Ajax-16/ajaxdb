@@ -1,7 +1,7 @@
 {
-  "name": "ajaxdb",
+  "name": "nuedb-driver",
   "version": "0.0.0",
-  "description": "AjaxDB coding interface to interact with a AjaxDB server",
+  "description": "NueDB coding interface to interact with a NueDB server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,6 +16,6 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "ajaxdb-client": "^1.0.2"
+    "nuedb-client": "^0.0.1"
   }
 }
