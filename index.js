@@ -1,8 +1,8 @@
-import connect from "ajaxdb-client";
+import connect from "nuedb-client";
 import { getCaracterPosition } from "./utils/utils.js";
 import { ormParse } from "./orm/parser.js";
 
-export class AjaxDBConnect {
+export class NueDBConnect {
 
     host = 'localhost';
     port = 3000;

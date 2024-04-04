@@ -1,6 +1,6 @@
 {
   "name": "nuedb-driver",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "NueDB coding interface to interact with a NueDB server",
   "main": "index.js",
   "scripts": {
