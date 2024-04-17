@@ -1,55 +1,68 @@
-import connect from "nuedb-client";
+import { connect, serverHandShake } from "nuedb-client";
 import { getCaracterPosition } from "./utils/utils.js";
 import { ormParse } from "./orm/parser.js";
 
-export class NueDBConnect {
+export class NueDBDriver {
 
-    host = 'localhost';
-    port = 3000;
+    connected = false;
 
-    constructor(host, port, databaseName) {
-    
+    constructor({ host, port, database }) {
         this.host = host;
         this.port = port;
-        this.databaseName = databaseName;
-
+        this.database = database
     }
 
     async connection() {
-        try{
-            await connect(this.host, this.port, `INIT ${this.databaseName}`);
-        }catch(err){
-            throw new Error ('Error while connecting to JSDB server: ' + err.message);
+
+        try {
+            const { success } = await serverHandShake(this.host, this.port);
+            if (success) {
+                await connect(this.host, this.port, `INIT ${this.database}`)
+            }
+            this.connected = success;
+            return this;
+
+        } catch (err) {
+            throw new Error('Error while connecting to NueDB server: ' + err.message);
         }
     }
 
     async queryRaw(query, params = []) {
 
-        const variablePositions = getCaracterPosition(query, '?');
+        if (this.connected) {
 
-        if (!Array.isArray(params)) {
-            throw new Error('Invalid parameters. Expected an Array containing "?" placeholders.');
-        }
+            const variablePositions = getCaracterPosition(query, '?');
 
-        if (params.length !== variablePositions.length) {
-            throw new Error('Number of parameters does not match the number of "?" placeholders.');
-        }
+            if (!Array.isArray(params)) {
+                throw new Error('Invalid parameters. Expected an Array containing "?" placeholders.');
+            }
 
-        const queryWithValues = query.replace(/\?/g, () => {
-            const value = params.shift();
-            return typeof value === 'string' ? `'${value}'` : value;
-        });
+            if (params.length !== variablePositions.length) {
+                throw new Error('Number of parameters does not match the number of "?" placeholders.');
+            }
 
-        try{
-            const result = await connect(this.host, this.port, queryWithValues);
-            return result;
-        }catch(err){
-            throw new Error(err.message);
+            const queryWithValues = query.replace(/\?/g, () => {
+                const value = params.shift();
+                return typeof value === 'string' ? `'${value}'` : value;
+            });
+
+            try {
+                const result = await connect(this.host, this.port, queryWithValues);
+                return result;
+            } catch (err) {
+                throw err;
+            }
+
+        } else {
+            return { "error": "You have not access to NueDB server because the handshake was not successful" }
         }
 
     }
 
     async query(query, params = []) {
+
+        if (this.connected) {
+
         const variablePositions = getCaracterPosition(query, '?');
 
         if (!Array.isArray(params)) {
@@ -65,12 +78,17 @@ export class NueDBConnect {
             return typeof value === 'string' ? `'${value}'` : value;
         });
 
-        try{
+        try {
             const result = await connect(this.host, this.port, queryWithValues);
             return ormParse(result); // Por ahora, va a poder mandar un objeto con todos los elementos de todas las queries
-        }catch(err){
-            throw new Error(err.message);
+        } catch (err) {
+            throw err;
         }
+
+    } else {
+        return { "error": "You have not access to NueDB server because the handshake was not successful" }
+    }
+
     }
 
 }
