@@ -47,8 +47,14 @@ export class NueDBDriver {
             });
 
             try {
-                const result = await connect(this.host, this.port, queryWithValues);
-                return result;
+            const results = await connect(this.host, this.port, queryWithValues);
+            const responses = []
+            for(const result of results) {
+                for(const element of result.body) {
+                    responses.push(element)
+                }
+            }
+            return responses;
             } catch (err) {
                 throw err;
             }
@@ -79,8 +85,14 @@ export class NueDBDriver {
         });
 
         try {
-            const result = await connect(this.host, this.port, queryWithValues);
-            return ormParse(result); // Por ahora, va a poder mandar un objeto con todos los elementos de todas las queries
+            const results = await connect(this.host, this.port, queryWithValues);
+            const responses = []
+            for(const result of results) {
+                for(const element of result.body) {
+                    responses.push(ormParse(element))
+                }
+            }
+            return responses; // Por ahora, va a poder mandar un objeto con todos los elementos de todas las queries
         } catch (err) {
             throw err;
         }
