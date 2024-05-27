@@ -6,16 +6,19 @@ export class NueDBDriver {
 
     connected = false;
 
-    constructor({ host, port, database }) {
+    constructor({ host, port, database, username, password }) {
         this.host = host;
         this.port = port;
         this.database = database
+        this.username = username;
+        this.password = password;
     }
 
-    async connection() {
-
+    async connect() {
         try {
-            const { success } = await serverHandShake(this.host, this.port);
+            
+            const { success } = await serverHandShake(this.host, this.port, this.username, this.password);
+            
             if (success) {
                 await connect(this.host, this.port, `INIT ${this.database}`)
             }
